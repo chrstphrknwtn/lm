@@ -1,6 +1,13 @@
 # ck
-An experimental port of k from zsh to c
 
-To build `make clean && make k`
+A port of zsh plugin [k](https://github.com/supercrabtree/k) to C. At the moment it's basically a crappy `ls -la` with zero options.
 
-To run `./k`
+## Build
+```shell
+make clean && make k
+```
+
+## Use 
+```shell
+./k
+```
