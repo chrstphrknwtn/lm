@@ -64,7 +64,7 @@ int main (int argc, char *argv[])
       char *date_output = format_date(buf.st_mtime);
       char *symlink_output = (S_ISLNK(buf.st_mode)) ? format_symlink(dir->d_name) : "";
 
-      printf("\033[38;5;241m%s\033[0m  %s %s\n", \
+      printf("\033[38;5;235m%s\033[0m  %s %s\n", \
         date_output, \
         dir->d_name, \
         symlink_output);
