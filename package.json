@@ -1,9 +1,0 @@
-{
-  "private": true,
-  "scripts": {
-    "start": "chokidar ./l.c --initial -c 'echo \"\n\" && make l && ./l &&'"
-  },
-  "devDependencies": {
-    "chokidar-cli": "1.2.0"
-  }
-}
