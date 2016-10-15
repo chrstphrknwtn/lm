@@ -1,13 +1,4 @@
-# l
+# lm
 
-`ls -la` without all the crap.
-
-## Build
-```shell
-make clean && make l
-```
-
-## Use
-```shell
-./l
-```
+Super minimal (and fast) directory listings. Basically `ls -l` without all the
+crap.
