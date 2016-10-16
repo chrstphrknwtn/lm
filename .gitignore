@@ -1,2 +1,4 @@
 lm
 lm.dSYM
+test-files
+dev/create-socket
