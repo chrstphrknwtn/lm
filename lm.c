@@ -74,6 +74,8 @@ char *format_symlink (const char *filename, \
 
 		symlink_path[st_size] = '\0';
 		sprintf(symlink_str, "→ \033[38;5;236m%s\033[0m", symlink_path);
+	} else {
+		sprintf(symlink_str, "");
 	}
 	return symlink_str;
 }
