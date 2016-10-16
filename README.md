@@ -1,4 +1,10 @@
 # lm
 
-Super minimal (and fast) directory listings. Basically `ls -l` without all the
-crap.
+Minimal directory listings.
+
+![lm preview](lm.png)
+
+## Installation
+````shell
+make install
+````
