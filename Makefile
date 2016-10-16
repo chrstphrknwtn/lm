@@ -50,6 +50,7 @@ setup:
 	touch	$(TF)/file \
 	$(TF)/file-suid \
 	$(TF)/file-sgid \
+	$(TF)/file-suid-sgid \
 	$(TF)/file-executable \
 	$(TF)/file-executable-usr \
 	$(TF)/file-executable-grp \
