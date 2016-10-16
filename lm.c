@@ -22,6 +22,18 @@ char *format_symlink (const char *filename)
 	return symlink_str;
 }
 
+/** Format short mode
+----------------------------------------------- */
+char *format_shortmode (const mode_t st_mode)
+{
+	static char shortmode_str[25];
+
+	sprintf(shortmode_str, "\033[38;5;236m%o\033[0m", \
+	        st_mode & (S_IRWXU | S_IRWXG | S_IRWXO));
+
+	return shortmode_str;
+}
+
 /** Wrap filename in ansi colors
 ----------------------------------------------- */
 char *color_filename (const char *filename, const mode_t st_mode)
@@ -113,9 +125,9 @@ int main (int argc, char *argv[])
 		char *filename = color_filename(dir_contents[i], buf.st_mode);
 
 		if (exists >= 0) {
-			printf("\033[38;5;236m%o\033[0m %s %s\n", \
+			printf("%s %s %s\n", \
 			       // File mode short format
-			       buf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO), \
+			       format_shortmode(buf.st_mode), \
 			       // Filename
 			       filename, \
 			       // Symlink target
