@@ -82,7 +82,7 @@ setup:
 	dev/create-socket $(TF)/socket
 
 #
-# Create test files & dirs
+# Clean up test files & dirs
 #
 setup-clean:
 	rm -rf $(TF)
