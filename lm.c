@@ -92,7 +92,7 @@ char collect_dir_contents (const char *path, char ***contents)
 
 	if (directory == NULL) {
 		perror("prsize");
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	// Find out how many items are in the directory
