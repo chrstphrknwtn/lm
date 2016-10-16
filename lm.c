@@ -53,7 +53,9 @@ char *format_filename (const char *filename, const mode_t st_mode)
 
 /** Format symlink with arrow and path
 ----------------------------------------------- */
-char *format_symlink (const char *filename, const mode_t st_mode, const size_t st_size)
+char *format_symlink (const char *filename, \
+                      const mode_t st_mode, \
+                      const size_t st_size)
 {
 	static char symlink_str[PATH_MAX];
 
@@ -66,9 +68,9 @@ char *format_symlink (const char *filename, const mode_t st_mode, const size_t s
 		r = readlink(filename, symlink_path, st_size + 1);
 
 		if (r < 0) {
-        perror("readlink");
-        exit(EXIT_FAILURE);
-    }
+			perror("readlink");
+			exit(EXIT_FAILURE);
+		}
 
 		symlink_path[st_size] = '\0';
 		sprintf(symlink_str, "→ \033[38;5;236m%s\033[0m", symlink_path);
