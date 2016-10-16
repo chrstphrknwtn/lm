@@ -60,6 +60,7 @@ setup:
 
 	chmod u+s $(TF)/file-suid
 	chmod g+s $(TF)/file-sgid
+	chmod u+s,g+s $(TF)/file-suid-sgid
 	chmod a+x $(TF)/file-executable
 	chmod u+x $(TF)/file-executable-usr
 	chmod g+x $(TF)/file-executable-grp
