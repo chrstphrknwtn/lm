@@ -21,29 +21,44 @@ char *format_shortmode (const mode_t st_mode)
 	return shortmode_str;
 }
 
-/** Wrap filename in ansi colors
+/** Format filenames with default macOS ls colors
 ----------------------------------------------- */
-char *format_filename (const char *filename, const mode_t st_mode)
+char *format_filename (const char *filename, const mode_t m)
 {
 	static char filename_str[PATH_MAX];
+	int is_executable = ((m & S_IXUSR) | (m & S_IXGRP) | (m & S_IXOTH));
 
-	// TODO: dir writable by GRP & OTH
-	// dir with user sticky bit
-	if (st_mode & (S_ISVTX)) {
-		sprintf(filename_str, "\033[42;30m%s\033[0m", filename);
-		// dir
-	} else if (S_ISDIR(st_mode)) {
-		sprintf(filename_str, "\033[34m%s\033[0m", filename);
-		// symlink
-	} else if (S_ISLNK(st_mode)) {
-		sprintf(filename_str, "\033[35m%s\033[0m", filename);
-		// executable with set-user-id
-	} else if (st_mode & (S_ISUID)) {
+	// dir writable by others
+	if (S_ISDIR(m) && (m & S_IWOTH)) {
+		sprintf(filename_str, "\033[43;30m%s\033[0m", filename);
+	// set-user-id on execution
+	} else if ((m & S_ISUID) && is_executable) {
 		sprintf(filename_str, "\033[41;30m%s\033[0m", filename);
-		// executable or writable by group
-	} else if (st_mode & (S_IXUSR | S_IXGRP | S_IXOTH | S_IWGRP)) {
+	// set-group-id on execution
+	} else if ((m & S_ISGID) && is_executable) {
+		sprintf(filename_str, "\033[46;30m%s\033[0m", filename);
+	// generally executable
+	} else if (S_ISREG(m) && is_executable) {
 		sprintf(filename_str, "\033[31m%s\033[0m", filename);
-		// regular file
+	// block device
+	} else if (S_ISBLK(m)) {
+		sprintf(filename_str, "\033[46;34m%s\033[0m", filename);
+	// character device
+	} else if (S_ISCHR(m)) {
+		sprintf(filename_str, "\033[43;34m%s\033[0m", filename);
+	// regular dir
+	} else if (S_ISDIR(m)) {
+		sprintf(filename_str, "\033[34m%s\033[0m", filename);
+	// pipe / FIFO
+	} else if (S_ISFIFO(m)) {
+		sprintf(filename_str, "\033[33m%s\033[0m", filename);
+	// socket
+	} else if (S_ISSOCK(m)) {
+		sprintf(filename_str, "\033[32m%s\033[0m", filename);
+	// symlink
+	} else if (S_ISLNK(m)) {
+		sprintf(filename_str, "\033[35m%s\033[0m", filename);
+	// Regular file
 	} else {
 		sprintf(filename_str, "\033[39m%s\033[0m", filename);
 	}
