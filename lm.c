@@ -10,14 +10,15 @@
 
 /** Format symlink with arrow and path
 ----------------------------------------------- */
-char *format_symlink (const char *filename)
+char *format_symlink (const char *filename, const mode_t st_mode)
 {
 	static char symlink_str[PATH_MAX];
 
-	char *symlink_path;
-
-	symlink_path = realpath(filename, NULL);
-	sprintf(symlink_str, "→ \033[38;5;236m%s\033[0m", symlink_path);
+	if (S_ISLNK(st_mode)) {
+		char *symlink_path;
+		symlink_path = realpath(filename, NULL);
+		sprintf(symlink_str, "→ \033[38;5;236m%s\033[0m", symlink_path);
+	}
 
 	return symlink_str;
 }
@@ -36,7 +37,7 @@ char *format_shortmode (const mode_t st_mode)
 
 /** Wrap filename in ansi colors
 ----------------------------------------------- */
-char *color_filename (const char *filename, const mode_t st_mode)
+char *format_filename (const char *filename, const mode_t st_mode)
 {
 	static char filename_str[PATH_MAX];
 
@@ -114,24 +115,21 @@ int main (int argc, char *argv[])
 {
 	struct stat buf;
 	char **dir_contents;
+	char *filename;
 	int dir_contents_length = collect_dir_contents(".", &dir_contents);
 	int exists;
 
 	printf("\n");
 
 	for (int i = 0; i < dir_contents_length; i++) {
-		exists = lstat(dir_contents[i], &buf);
-
-		char *filename = color_filename(dir_contents[i], buf.st_mode);
+		filename = dir_contents[i];
+		exists = lstat(filename, &buf);
 
 		if (exists >= 0) {
 			printf("%s %s %s\n", \
-			       // File mode short format
 			       format_shortmode(buf.st_mode), \
-			       // Filename
-			       filename, \
-			       // Symlink target
-			       (S_ISLNK(buf.st_mode)) ? format_symlink(dir_contents[i]) : "");
+			       format_filename(filename, buf.st_mode), \
+			       format_symlink(filename, buf.st_mode));
 		}
 	}
 
