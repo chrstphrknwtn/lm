@@ -89,3 +89,5 @@ setup:
 setup-clean:
 	rm -rf $(TF)
 	rm -f dev/create-socket
+
+.PHONY: install uninstall clean setup setup-clean
