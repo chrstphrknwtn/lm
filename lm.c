@@ -15,7 +15,7 @@ char *format_shortmode (const mode_t st_mode)
 {
 	static char shortmode_str[25];
 
-	sprintf(shortmode_str, "\033[38;5;236m%o\033[0m", \
+	sprintf(shortmode_str, "\033[38;5;236m%o\033[0m",
 	        st_mode & (S_IRWXU | S_IRWXG | S_IRWXO));
 
 	return shortmode_str;
@@ -31,34 +31,34 @@ char *format_filename (const char *filename, const mode_t m)
 	// dir writable by others
 	if (S_ISDIR(m) && (m & S_IWOTH)) {
 		sprintf(filename_str, "\033[43;30m%s\033[0m", filename);
-	// set-user-id on execution
+		// set-user-id on execution
 	} else if ((m & S_ISUID) && is_executable) {
 		sprintf(filename_str, "\033[41;30m%s\033[0m", filename);
-	// set-group-id on execution
+		// set-group-id on execution
 	} else if ((m & S_ISGID) && is_executable) {
 		sprintf(filename_str, "\033[46;30m%s\033[0m", filename);
-	// generally executable
+		// generally executable
 	} else if (S_ISREG(m) && is_executable) {
 		sprintf(filename_str, "\033[31m%s\033[0m", filename);
-	// block device
+		// block device
 	} else if (S_ISBLK(m)) {
 		sprintf(filename_str, "\033[46;34m%s\033[0m", filename);
-	// character device
+		// character device
 	} else if (S_ISCHR(m)) {
 		sprintf(filename_str, "\033[43;34m%s\033[0m", filename);
-	// regular dir
+		// regular dir
 	} else if (S_ISDIR(m)) {
 		sprintf(filename_str, "\033[34m%s\033[0m", filename);
-	// pipe / FIFO
+		// pipe / FIFO
 	} else if (S_ISFIFO(m)) {
 		sprintf(filename_str, "\033[33m%s\033[0m", filename);
-	// socket
+		// socket
 	} else if (S_ISSOCK(m)) {
 		sprintf(filename_str, "\033[32m%s\033[0m", filename);
-	// symlink
+		// symlink
 	} else if (S_ISLNK(m)) {
 		sprintf(filename_str, "\033[35m%s\033[0m", filename);
-	// Regular file
+		// Regular file
 	} else {
 		sprintf(filename_str, "\033[39m%s\033[0m", filename);
 	}
@@ -68,8 +68,8 @@ char *format_filename (const char *filename, const mode_t m)
 
 /** Format symlink with arrow and path
 ----------------------------------------------- */
-char *format_symlink (const char *filename, \
-                      const mode_t st_mode, \
+char *format_symlink (const char *filename,
+                      const mode_t st_mode,
                       const size_t st_size)
 {
 	static char symlink_str[PATH_MAX];
@@ -156,9 +156,9 @@ int main (int argc, char *argv[])
 		exists = lstat(filename, &buf);
 
 		if (exists >= 0) {
-			printf("%s %s %s\n", \
-			       format_shortmode(buf.st_mode), \
-			       format_filename(filename, buf.st_mode), \
+			printf("%s %s %s\n",
+			       format_shortmode(buf.st_mode),
+			       format_filename(filename, buf.st_mode),
 			       format_symlink(filename, buf.st_mode, buf.st_size));
 		}
 	}
