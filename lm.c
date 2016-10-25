@@ -97,7 +97,7 @@ char *format_symlink (const char *filename,
 
 /** Readdir
 ----------------------------------------------------------------------------- */
-char collect_dir_contents (const char *path, char ***contents)
+int collect_dir_contents (const char *path, char ***contents)
 {
 	size_t count = 0;
 	DIR *directory;
