@@ -147,15 +147,13 @@ int main (int argc, char *argv[])
 	char **dir_contents;
 	char *filename;
 	int dir_contents_length = collect_dir_contents(".", &dir_contents);
-	int exists;
 
 	printf("\n");
 
 	for (int i = 0; i < dir_contents_length; i++) {
-		filename = dir_contents[i];
-		exists = lstat(filename, &buf);
+		filename = dir_contents[i];;
 
-		if (exists >= 0) {
+		if (lstat(filename, &buf) >= 0) {
 			printf("%s %s %s\n",
 			       format_shortmode(buf.st_mode),
 			       format_filename(filename, buf.st_mode),
