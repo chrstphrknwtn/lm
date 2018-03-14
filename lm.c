@@ -16,7 +16,7 @@ char *format_shortmode (const mode_t st_mode)
 	static char shortmode_str[25];
 
 	sprintf(shortmode_str, "\033[38;5;236m%o\033[0m",
-	        st_mode & (S_IRWXU | S_IRWXG | S_IRWXO));
+			st_mode & (S_IRWXU | S_IRWXG | S_IRWXO));
 
 	return shortmode_str;
 }
@@ -69,8 +69,8 @@ char *format_filename (const char *filename, const mode_t m)
 /** Format symlink with arrow and path
 ----------------------------------------------- */
 char *format_symlink (const char *filename,
-                      const mode_t st_mode,
-                      const size_t st_size)
+		const mode_t st_mode,
+		const size_t st_size)
 {
 	static char symlink_str[PATH_MAX];
 
@@ -155,9 +155,9 @@ int main (int argc, char *argv[])
 
 		if (lstat(filename, &buf) >= 0) {
 			printf("%s %s %s\n",
-			       format_shortmode(buf.st_mode),
-			       format_filename(filename, buf.st_mode),
-			       format_symlink(filename, buf.st_mode, buf.st_size));
+					format_shortmode(buf.st_mode),
+					format_filename(filename, buf.st_mode),
+					format_symlink(filename, buf.st_mode, buf.st_size));
 		}
 	}
 
